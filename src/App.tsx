@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Pagination from './components/Pagination';
+import PeopleList from './components/PeopleList';
+import SearchInput from './components/SearchInput';
+import useStarWarsPeople from './hooks/useStarWarsPeople';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+	const {
+		people,
+		page,
+		count,
+		fetchPeopleInNextPage,
+		loading,
+		search,
+		fetchPeopleWhichMatchSearchQuery,
+	} = useStarWarsPeople();
+
+	return (
+		<div className="App">
+			<SearchInput value={search} onChange={fetchPeopleWhichMatchSearchQuery} />
+			<PeopleList people={people} loading={loading !== 'none'} />
+			<Pagination count={count} activePage={page} onChange={fetchPeopleInNextPage} />
+		</div>
+	);
 }
-
-export default App;
